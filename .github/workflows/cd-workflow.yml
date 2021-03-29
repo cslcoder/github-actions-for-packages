@@ -36,7 +36,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - uses: actions/download-artifact@master
         with:
-        
+          name: webpack artifacts
+          path: public        
+      - name: npm install, and test
+        run: |
+          npm install
+          npm test
+        env:
+          CI: true          
+
   Build-and-Push-Docker-Image:
     runs-on: ubuntu-latest
     needs: test
@@ -58,11 +66,4 @@ jobs:
         registry: docker.pkg.github.com
         repository: cslcoder/github-actions-for-packages/tic-tac-toe
         tag_with_sha: true
-          name: webpack artifacts
-          path: public
-      - name: npm install, and test
-        run: |
-          npm install
-          npm test
-        env:
-          CI: true
+
